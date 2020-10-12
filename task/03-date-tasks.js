@@ -22,7 +22,8 @@
  *    'Sun, 17 May 1998 03:00:00 GMT+01' => Date()
  */
 function parseDataFromRfc2822(value) {
-   throw new Error('Not implemented');
+   return new Date(value); 
+
 }
 
 /**
@@ -37,7 +38,7 @@ function parseDataFromRfc2822(value) {
  *    '2016-01-19T08:07:37Z' => Date()
  */
 function parseDataFromIso8601(value) {
-   throw new Error('Not implemented');
+   return new Date(value);
 }
 
 
@@ -56,9 +57,16 @@ function parseDataFromIso8601(value) {
  *    Date(2015,1,1)    => false
  */
 function isLeapYear(date) {
-   throw new Error('Not implemented');
+   if (date.getFullYear() % 4 !== 0 && date.getFullYear() % 400 !== 0) {
+      return false;
+   } else if (date.getFullYear() % 100 !== 0) {
+      return true;
+   } else if (date.getFullYear() % 400 !== 0) {
+      return false;
+   } else {
+      return true;
 }
-
+}
 
 /**
  * Returns the string represention of the timespan between two dates.
@@ -74,10 +82,48 @@ function isLeapYear(date) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,10,0,20)        => "00:00:20.000"
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,10,0,0,250)     => "00:00:00.250"
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
+ *    // 123234232
  */
 function timeSpanToString(startDate, endDate) {
-   throw new Error('Not implemented');
+   let timeInMs = endDate.getTime() - startDate.getTime();
+   let resHour = '00';
+   let resMinutes = '00';
+   let resSeconds = '00';
+   let resMs ='000'
+   
+   function format(num) {
+      if (num <10) {
+         return `0${num}`
+      }
+      return num;
+   }
+
+   if (timeInMs >= 1000*60*60){
+      resHour = Math.floor(timeInMs/(1000*60*60));
+      resHour = format(resHour);
+      timeInMs = timeInMs - resHour*60*60*1000;
+   }
+   if (timeInMs >= 60*1000) {
+      resMinutes = Math.floor(timeInMs/(1000*60));
+      resMinutes = format(resMinutes);
+      timeInMs = timeInMs - resMinutes*60*1000;
+   }
+   if (timeInMs >= 1000) {
+      resSeconds = Math.floor(timeInMs/(1000));
+      resSeconds = format(resSeconds);
+      timeInMs = timeInMs - resSeconds*1000;
+   }
+   resMs=timeInMs;
+   if (resMs <10) {
+      resMs = `00${resMs}`;
+   }
+   else if (resMs <100) {
+      resMs = `0${resMs}`;
+   }
+
+return `${resHour}:${resMinutes}:${resSeconds}.${resMs}`
 }
+    
 
 
 /**

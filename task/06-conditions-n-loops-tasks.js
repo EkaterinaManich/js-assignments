@@ -30,7 +30,14 @@
  *
  */
 function getFizzBuzz(num) {
-    throw new Error('Not implemented');
+    if(num % 15 ===0) {
+        return 'FizzBuzz';
+    } else if(num % 3 ===0 && num % 5 !==0) {
+        return 'Fizz';
+    } else if(num % 5 ===0 && num % 3 !==0) {
+        return 'Buzz';
+    }
+    return num;
 }
 
 
@@ -46,7 +53,11 @@ function getFizzBuzz(num) {
  *   10 => 3628800
  */
 function getFactorial(n) {
-    throw new Error('Not implemented');
+    let res = 1;
+    for(let i=1; i<=n; i++) {
+        res = res*i;
+    }
+    return res;
 }
 
 
@@ -63,7 +74,11 @@ function getFactorial(n) {
  *   -1,1  =>  0  ( = -1 + 0 + 1 )
  */
 function getSumBetweenNumbers(n1, n2) {
-    throw new Error('Not implemented');
+    let res = 0;
+    for(let i=n1; i<=n2; i++) {
+      res += i;  
+    }
+    return res;
 }
 
 
@@ -166,7 +181,21 @@ function isInsideCircle(circle, point) {
  *   'entente' => null
  */
 function findFirstSingleChar(str) {
-    throw new Error('Not implemented');
+    let obj = {};
+    for(let i=0; i<str.length; i++) {
+        if(obj[str[i]]) {
+            obj[str[i]] += 1;
+        } else {
+            obj[str[i]] = 1;
+        }
+    }
+
+    for(let item of Object.entries(obj)) {
+        if(item[1] === 1) {
+            return item[0];
+        }
+    }
+    return null;
 }
 
 
@@ -209,7 +238,11 @@ function getIntervalString(a, b, isStartIncluded, isEndIncluded) {
  * 'noon' => 'noon'
  */
 function reverseString(str) {
-    throw new Error('Not implemented');
+    let res = "";
+    for(let i=str.length-1; i>=0; i--) {
+        res += str[i];
+    }
+    return res;
 }
 
 
@@ -226,7 +259,9 @@ function reverseString(str) {
  *   34143 => 34143
  */
 function reverseInteger(num) {
-    throw new Error('Not implemented');
+    let n = num + '';
+    n = n.split('').reverse().join('');
+    return +n;
 }
 
 
@@ -270,7 +305,21 @@ function isCreditCardNumber(ccn) {
  *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
  */
 function getDigitalRoot(num) {
-    throw new Error('Not implemented');
+    let n = num + '';
+    let res = 0;
+    for(let i=0; i<n.length; i++) {
+        res += +n[i];
+    }
+    
+    while(res > 9) {
+        let end = 0;
+        let strRes = res + '';
+        for(let i=0; i<strRes.length; i++) {
+            end += +strRes[i];
+        }
+        res = end;
+    } 
+    return res;
 }
 
 
@@ -296,7 +345,18 @@ function getDigitalRoot(num) {
  *   '{[(<{[]}>)]}' = true 
  */
 function isBracketsBalanced(str) {
-    throw new Error('Not implemented');
+    for(let i=0, end = Math.ceil(str.length/2); i<end; i++) {
+        if(str.includes('[]')){
+            str = str.replace('[]', '')
+        } else if(str.includes('{}')){
+            str = str.replace('{}', '')
+        } else if(str.includes('()')){
+            str = str.replace('()', '')
+        } else if(str.includes('<>')){
+            str = str.replace('<>', '')
+        }
+    }
+    return str.length ? false : true;
 }
 
 
